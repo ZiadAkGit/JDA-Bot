@@ -19,18 +19,14 @@ import java.io.*;
 import java.security.PrivilegedAction;
 import java.util.*;
 
+import static com.sun.tools.internal.xjc.model.CBuiltinLeafInfo.TOKEN;
+
 public class Main {
     static TextChannel textChannel;
 
     public static void main(String[] args)  throws LoginException, InterruptedException  {
-        String Token = null;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("ignore/TOKEN"));
-            Token = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        JDABuilder JdaBuilder = JDABuilder.createDefault(Token).enableIntents(GatewayIntent.GUILD_MEMBERS).setActivity(Activity.playing("Something cool"));
+        JDABuilder JdaBuilder = JDABuilder.createDefault(TOKEN.toString());
+        JdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS);
         JdaBuilder.addEventListeners(new Help());
         JDA jda = JdaBuilder.build();
         Thread.sleep(2000);
