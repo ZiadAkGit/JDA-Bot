@@ -1,5 +1,4 @@
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -18,17 +17,24 @@ public class Help extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        Guild server = event.getGuild();
+        User author = event.getAuthor();
+        Member member = event.getMember();
         TextChannel txt = event.getChannel();
         String msg = event.getMessage().getContentRaw();
+
+
+
         if (!event.getAuthor().isBot() && msg.startsWith(prefix)) {
             if (msg.equalsIgnoreCase(prefix + "ping")) {
                 txt.sendTyping().complete();
                 txt.sendMessage("Pong!").complete();
             }
-            if (msg.equalsIgnoreCase(prefix + "ping")) {
+            if (msg.equalsIgnoreCase(prefix + "status")) {
                 txt.sendTyping().complete();
-                txt.sendMessage("Pong!").complete();
+                System.out.println();
             }
         }
     }
+
 }

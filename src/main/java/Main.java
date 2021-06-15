@@ -16,6 +16,6 @@ public class Main {
         Thread.sleep(2000);
         Guild Server = jda.getGuilds().get(0);
         textChannel = Server.getTextChannels().get(0);
-        //textChannel.sendMessage("I'm ALIVE!").complete();
+        textChannel.sendMessage("I'm ALIVE!").complete();
     }
 }
