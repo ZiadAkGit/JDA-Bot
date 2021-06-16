@@ -1,8 +1,11 @@
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
 
 public class Help extends ListenerAdapter {
     String prefix = "!";
@@ -23,8 +26,6 @@ public class Help extends ListenerAdapter {
         TextChannel txt = event.getChannel();
         String msg = event.getMessage().getContentRaw();
 
-
-
         if (!event.getAuthor().isBot() && msg.startsWith(prefix)) {
             if (msg.equalsIgnoreCase(prefix + "ping")) {
                 txt.sendTyping().complete();
@@ -33,6 +34,16 @@ public class Help extends ListenerAdapter {
             if (msg.equalsIgnoreCase(prefix + "status")) {
                 txt.sendTyping().complete();
                 System.out.println();
+            }
+            if (msg.startsWith(prefix + "avatar")) {
+                txt.sendTyping().complete();
+                for (Member m : event.getMessage().getMentionedMembers()) {
+                    EmbedBuilder eb = new EmbedBuilder();
+                    eb.setImage(m.getUser().getAvatarUrl());
+                    eb.setTitle(m.getUser().getName().trim());
+                    eb.setColor(Color.orange);
+                    txt.sendMessage(eb.build()).queue();
+                }
             }
         }
     }
