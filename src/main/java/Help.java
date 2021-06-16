@@ -24,27 +24,13 @@ public class Help extends ListenerAdapter {
         User author = event.getAuthor();
         Member member = event.getMember();
         TextChannel txt = event.getChannel();
-        String msg = event.getMessage().getContentRaw();
+        Message message = event.getMessage();
+        String message_content = message.getContentRaw();
 
-        if (!event.getAuthor().isBot() && msg.startsWith(prefix)) {
-            if (msg.equalsIgnoreCase(prefix + "ping")) {
-                txt.sendTyping().complete();
-                txt.sendMessage("Pong!").complete();
-            }
-            if (msg.equalsIgnoreCase(prefix + "status")) {
-                txt.sendTyping().complete();
-                System.out.println();
-            }
-            if (msg.startsWith(prefix + "avatar")) {
-                txt.sendTyping().complete();
-                for (Member m : event.getMessage().getMentionedMembers()) {
-                    EmbedBuilder eb = new EmbedBuilder();
-                    eb.setImage(m.getUser().getAvatarUrl());
-                    eb.setTitle(m.getUser().getName().trim());
-                    eb.setColor(Color.orange);
-                    txt.sendMessage(eb.build()).queue();
-                }
-            }
+        //Checks if user that sent the message is not the bot so it wont loop itself and if it's starts with the prefix.
+        if (!event.getAuthor().isBot() && message_content.startsWith(prefix))
+        {
+
         }
     }
 
