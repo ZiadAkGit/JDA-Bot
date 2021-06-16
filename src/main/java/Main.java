@@ -9,7 +9,7 @@ public class Main {
     static TextChannel textChannel;
 
     public static void main(String[] args)  throws LoginException, InterruptedException  {
-        JDABuilder JdaBuilder = JDABuilder.createDefault(new Token().toString());
+        JDABuilder JdaBuilder = JDABuilder.createDefault(Token.token);
         JdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS);
         JdaBuilder.addEventListeners(new Help());
         JDA jda = JdaBuilder.build();

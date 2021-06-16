@@ -12,7 +12,7 @@ public class Help extends ListenerAdapter {
 
     @Override
     public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
-        if (!event.getAuthor().isBot() && event.getAuthor().getName().equalsIgnoreCase(new Token().discord_Name())) {
+        if (!event.getAuthor().isBot() && event.getAuthor().getName().equalsIgnoreCase(Token.Discord_name)) {
             event.getChannel().sendTyping().complete();
             event.getChannel().sendMessage("Hey " + event.getAuthor().getName() + " it's me " + event.getJDA().getSelfUser().getName()).queue();
         }
