@@ -8,3 +8,4 @@ chromedriver.exe
 .gradle/5.2.1/fileContent/fileContent.lock
 .gradle/5.2.1/fileHashes/fileHashes.lock
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
+*.lock
