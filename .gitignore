@@ -1,3 +1,7 @@
 
 src/main/java/TOKEN.java
 build/classes/java/main/Token.class
+chromedriver.exe
+.gradle/5.2.1/javaCompile/javaCompile.lock
+*.lock
+*.lock
