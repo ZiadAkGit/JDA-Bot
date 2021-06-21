@@ -6,12 +6,16 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.LogManager;
 
@@ -84,7 +88,15 @@ public class Help extends ListenerAdapter {
                 }
             }
 
-            /** A function that shows the top picture of an instagram hashtag (Works only coupel of times a day)
+            if(message_content.startsWith(prefix + "ipad")){
+                driver.get(Token.BASE_URL4);
+                for (WebElement ipad : driver.findElements(By.className("product-item-info"))){
+                    txt.sendTyping().queue();
+                    txt.sendMessage(ipad.getText() + "            --------------------------                      ").queue();
+                }
+            }
+
+            /** A function that shows the top picture of an instagram hashtag (Works only couple of times a day)
             if(message_content.startsWith(prefix + "instag")){
                 String tag = message_content.split("instag")[1].trim();
                 driver.get("https://www.instagram.com/explore/tags/" + tag);
