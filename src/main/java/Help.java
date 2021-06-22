@@ -28,7 +28,6 @@ public class Help extends ListenerAdapter {
         System.setProperty(Token.CHROME_DRIVER,Token.CHROME_DRIVER_LOCATION);
         CHROME_OPTIONS.addArguments("--headless");
         CHROME_OPTIONS.addArguments("window-size=7680,4320");
-
     }
 
     @Override
