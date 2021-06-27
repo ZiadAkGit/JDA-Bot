@@ -1,3 +1,4 @@
+import com.sun.webkit.ThemeClient;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -95,14 +96,19 @@ public class Help extends ListenerAdapter {
                 }
             }
 
-            /** A function that shows the top picture of an instagram hashtag (Works only couple of times a day)
-            if(message_content.startsWith(prefix + "instag")){
-                String tag = message_content.split("instag")[1].trim();
-                driver.get("https://www.instagram.com/explore/tags/" + tag);
+
+            //Jobs finder using google search -> inurl: /career
+            if(message_content.startsWith(prefix + "jobs")){
+                txt.sendTyping().queue();
+                driver.get(Token.Base_URL5);
+                List<WebElement> links = driver.findElements(By.xpath("//*[@id=\"rso\"]/div"));
+                System.out.println(links.size());
+                for (WebElement link : links) {
+                    txt.sendMessage(link.findElement(By.tagName("a")).getText().trim()).queue();
+                }
+                driver.close();
+                driver.quit();
             }
-             **/
-
-
 
         }
     }
@@ -122,8 +128,7 @@ public class Help extends ListenerAdapter {
                 url += AlphaNumericArray[r.nextInt(AlphaNumericArray.length)];
             }
         }
-        String furl = Token.BASE_URL3 + url;
-        return furl;
+        return Token.BASE_URL3 + url;
     }
 
 }

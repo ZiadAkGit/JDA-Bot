@@ -9,3 +9,13 @@ chromedriver.exe
 .gradle/5.2.1/fileHashes/fileHashes.lock
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
 *.lock
+chromedriver
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/5.2.1/javaCompile/taskHistory.bin
+.gradle/5.2.1/javaCompile/javaCompile.lock
+.gradle/5.2.1/javaCompile/classAnalysis.bin
+.gradle/5.2.1/fileHashes/fileHashes.lock
+.gradle/5.2.1/fileHashes/fileHashes.bin
+.gradle/5.2.1/fileContent/fileContent.lock
+.gradle/5.2.1/executionHistory/executionHistory.lock
+.gradle/5.2.1/executionHistory/executionHistory.bin
