@@ -1,24 +1,17 @@
-import com.sun.webkit.ThemeClient;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.LogManager;
+
 
 public class Help extends ListenerAdapter {
     String prefix = "!";
@@ -29,14 +22,6 @@ public class Help extends ListenerAdapter {
         System.setProperty(Token.CHROME_DRIVER,Token.CHROME_DRIVER_LOCATION);
         CHROME_OPTIONS.addArguments("--headless");
         CHROME_OPTIONS.addArguments("window-size=7680,4320");
-    }
-
-    @Override
-    public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
-        if (!event.getAuthor().isBot() && event.getAuthor().getName().equalsIgnoreCase(Token.Discord_name)) {
-            event.getChannel().sendTyping().complete();
-            event.getChannel().sendMessage("Hey " + event.getAuthor().getName() + " it's me " + event.getJDA().getSelfUser().getName()).queue();
-        }
     }
 
     @Override
@@ -51,15 +36,6 @@ public class Help extends ListenerAdapter {
         if (!event.getAuthor().isBot() && message_content.startsWith(prefix))
         {
             driver = new ChromeDriver(CHROME_OPTIONS);
-            if(message_content.startsWith(prefix + "getip")){
-                txt.sendTyping().queue();
-                driver.get(Token.BASE_URL);
-                for (WebElement ip : driver.findElements(By.className("addrLeft"))) {
-                    txt.sendMessage("http://" + ip.getText()).queue();
-                }
-                driver.close();
-                driver.quit();
-            }
 
             if (message_content.startsWith(prefix + "shifts")) {
                 txt.sendTyping().queue();
@@ -96,7 +72,6 @@ public class Help extends ListenerAdapter {
                 }
             }
 
-
             //Jobs finder using google search -> inurl: /career
             if(message_content.startsWith(prefix + "jobs")){
                 txt.sendTyping().queue();
@@ -116,19 +91,19 @@ public class Help extends ListenerAdapter {
     public static String randomImage() {
         char[] AlphaNumericArray = "0123456789abcdefghijklmnopqrstuvxyz".toCharArray();
         Random r = new Random();
-        String url = "";
+        String ending_url = "";
         int x = r.nextInt(101);
         if (x <= 70) {
             for (int i = 0; i < 6; i++) {
-                url += AlphaNumericArray[r.nextInt(AlphaNumericArray.length)];
+                ending_url += AlphaNumericArray[r.nextInt(AlphaNumericArray.length)];
             }
             //30% chance of getting into this else
         } else {
             for (int i = 0; i < 5; i++) {
-                url += AlphaNumericArray[r.nextInt(AlphaNumericArray.length)];
+                ending_url += AlphaNumericArray[r.nextInt(AlphaNumericArray.length)];
             }
         }
-        return Token.BASE_URL3 + url;
+        return Token.BASE_URL3 + ending_url;
     }
 
 }
