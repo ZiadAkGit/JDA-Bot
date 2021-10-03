@@ -21,6 +21,9 @@ public class Help extends ListenerAdapter {
     public Help() {
         System.setProperty(Token.CHROME_DRIVER, Token.CHROME_DRIVER_LOCATION);
         CHROME_OPTIONS.addArguments("--headless");
+        CHROME_OPTIONS.addArguments("--disable-gpu");
+        CHROME_OPTIONS.addArguments("--disable-infobars");
+        CHROME_OPTIONS.addArguments("--disable-translate");
         CHROME_OPTIONS.addArguments("window-size=7680,4320");
     }
 
