@@ -1,24 +1,17 @@
-import com.sun.webkit.ThemeClient;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.LogManager;
 
 public class Help extends ListenerAdapter {
     String prefix = "!";
@@ -26,7 +19,7 @@ public class Help extends ListenerAdapter {
     protected WebDriver driver;
 
     public Help() {
-        System.setProperty(Token.CHROME_DRIVER,Token.CHROME_DRIVER_LOCATION);
+        System.setProperty(Token.CHROME_DRIVER, Token.CHROME_DRIVER_LOCATION);
         CHROME_OPTIONS.addArguments("--headless");
         CHROME_OPTIONS.addArguments("window-size=7680,4320");
     }
@@ -48,10 +41,9 @@ public class Help extends ListenerAdapter {
         Message message = event.getMessage();
         String message_content = message.getContentRaw();
 
-        if (!event.getAuthor().isBot() && message_content.startsWith(prefix))
-        {
+        if (!event.getAuthor().isBot() && message_content.startsWith(prefix)) {
             driver = new ChromeDriver(CHROME_OPTIONS);
-            if(message_content.startsWith(prefix + "getip")){
+            if (message_content.startsWith(prefix + "getip")) {
                 txt.sendTyping().queue();
                 driver.get(Token.BASE_URL);
                 for (WebElement ip : driver.findElements(By.className("addrLeft"))) {
@@ -75,30 +67,28 @@ public class Help extends ListenerAdapter {
                 driver.quit();
             }
 
-            if(message_content.startsWith(prefix + "link")){
-                if((message_content.split("link").length == 2)){
-                    if(Integer.parseInt(message_content.split("link")[1].trim()) > 0) {
+            if (message_content.startsWith(prefix + "link")) {
+                if ((message_content.split("link").length == 2)) {
+                    if (Integer.parseInt(message_content.split("link")[1].trim()) > 0) {
                         for (int i = 0; i < Integer.parseInt(message_content.split("link")[1].trim()); i++) {
                             txt.sendTyping().queue();
                             txt.sendMessage(randomImage()).queue();
                         }
                     }
-                }else{
+                } else {
                     txt.sendMessage("Give me number Human!").complete();
                 }
             }
 
-            if(message_content.startsWith(prefix + "ipad")){
+            if (message_content.startsWith(prefix + "ipad")) {
                 driver.get(Token.BASE_URL4);
-                for (WebElement ipad : driver.findElements(By.className("product-item-info"))){
+                for (WebElement ipad : driver.findElements(By.className("product-item-info"))) {
                     txt.sendTyping().queue();
                     txt.sendMessage(ipad.getText() + "            --------------------------                      ").queue();
                 }
             }
-
-
             //Jobs finder using google search -> inurl: /career
-            if(message_content.startsWith(prefix + "jobs")){
+            if (message_content.startsWith(prefix + "jobs")) {
                 txt.sendTyping().queue();
                 driver.get(Token.Base_URL5);
                 List<WebElement> links = driver.findElements(By.xpath("//*[@id=\"rso\"]/div"));
@@ -110,6 +100,20 @@ public class Help extends ListenerAdapter {
                 driver.quit();
             }
 
+            if (message_content.startsWith(prefix + "interview")) {
+                txt.sendTyping().queue();
+                driver.get(Token.Base_URL6);
+                List<WebElement> interviews = driver.findElements(By.xpath("/html/body/div[3]/div/div/div/div/div/div[1]/div[2]/article/div[1]/div/div[1]/div"));
+                for (WebElement interview : interviews) {
+                    if (interview.findElement(By.xpath("//*[@id=\"InterviewQuestionResult_2\"]/div/div/div/div/div[2]/table/tbody/tr/td/a")).isDisplayed()) {
+                        interview.findElement(By.xpath("//*[@id=\"InterviewQuestionResult_2\"]/div/div/div/div/div[2]/table/tbody/tr/td/a")).click();
+                    }
+                    txt.sendMessage(interview.getText()).queue();
+                    txt.sendMessage("----------------------").queue();
+                }
+                driver.close();
+                driver.quit();
+            }
         }
     }
 
