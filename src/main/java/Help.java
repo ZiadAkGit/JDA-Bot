@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -7,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
 import java.io.File;
@@ -117,6 +121,43 @@ public class Help extends ListenerAdapter {
                 driver.close();
                 driver.quit();
             }
+
+            if (message_content.startsWith(prefix + "urban")) {
+                txt.sendTyping().queue();
+                driver.get(Token.Base_URL7 + message_content.split("!urban ")[1]);
+                String json = driver.findElements(By.xpath("/html/body/pre")).get(0).getText().trim();
+                json = json.replace("{\"list\":","").trim();
+                json = json.substring(0, json.length() - 1);
+                driver.close();
+                driver.quit();
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Urban[] gsontoString = gson.fromJson(json, Urban[].class);
+                if(gsontoString.length > 0) {
+                    String results = gsontoString[0].toString().replace("[", "").replace("]", "");
+                    if(results.length() > 200) {
+                        String results2 = gsontoString[1].toString().replace("[", "").replace("]", "");
+                        txt.sendMessage(results2).queue();
+                    }
+                }
+                else
+                    txt.sendMessage("Nothing on **" + message_content.split("!urban ")[1] + "**").queue();
+            }
+
+            if (message_content.startsWith(prefix + "speedtest")) {
+                txt.sendMessage("Starting Speed Test Please Wait...").complete();
+                txt.sendTyping().queue();
+                driver.get(Token.Base_URL8);
+                WebDriverWait wait = new WebDriverWait(driver,12);
+                wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//*[@id=\"show-more-details-link\"]")));
+                String speed = driver.findElement(By.xpath("/html/body/div/div[2]/div[1]")).getText();
+                speed = speed.split("\n")[1] + " " +  speed.split("\n")[2];
+                driver.close();
+                driver.quit();
+                txt.sendMessage("Your Speed is: " + speed).complete();
+            }
+
         }
     }
 
